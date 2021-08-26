@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+  namespace: monitoring
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      annotations:
+        diamanti.com/endpoint0: '{"network":"grafana","perfTier":"high"}'
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - image: grafana/grafana:7.0.5
+        imagePullPolicy: IfNotPresent
+        name: grafana
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+        resources:
+          requests:
+            memory: 1Gi
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/grafana/grafana.ini  # 반드시 파일 이름까지 포함한다. 
+          subPath: grafana.ini
+      volumes:
+      - name: config-volume
+        configMap:
+          name: grafana-cm
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

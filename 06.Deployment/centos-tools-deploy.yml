@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cent-tools
+  name: cent-tools
+  #  namespace: elastic
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: cent-tools
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: cent-tools
+    spec:
+      containers:
+      - image: centos/tools
+        imagePullPolicy: Always
+        name: tools
+        command:
+        - /bin/sh
+        - -c
+        - "sleep inf"
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      #   volumeMounts:
+      #   - name: nfs-vol
+      #     mountPath: /home/upload
+      # volumes:
+      #   - name: nfs-vol
+      #     persistentVolumeClaim:
+      #       claimName: nfs-elastic-pvc  ## PVC 이름 지정

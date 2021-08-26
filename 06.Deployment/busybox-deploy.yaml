@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox
+  # namespace: spektra-nice-project-nice-project
+  labels:
+    app: busybox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox  # POD label과 일치
+  template:    
+    metadata:
+      labels:
+        app: busybox # Selector label과 일치
+    spec:
+      # hostAliases:
+      # - ip: "172.17.28.160"
+      #   hostnames:
+      #   - "harbor.spk.io"
+      containers:
+      - name: busybox
+        image: busybox
+        # image: harbor.spk.io/spk/busybox
+        command:
+        - "/bin/sh"
+        - "-c"
+        - "sleep inf"
+        resources:
+          limits:
+            cpu: 150m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+

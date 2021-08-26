@@ -1,0 +1,74 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: wordpress-mysql
+  namespace: test-db
+  # annotations:
+  #   diamanti.com/endpoint0: '{"network":"red","perfTier":"high"}'  # network 이름 지정
+  labels:
+    app: wordpress
+spec:
+  serviceName: wordpress-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: mysql
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        resources:
+          requests:
+            cpu: "34"
+            memory: 64Gi
+          limits:
+            cpu: "34"
+            memory: 64Gi
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        - name: config-volume
+          # mountPath: /etc/my.cnf.d
+          mountPath: /etc/my.cnf
+          subPath: my.cnf
+      - name: netbackup
+        image: store/veritasnetbackup/client:8.2
+        command:
+        - "/entrypoint.sh"
+        - "-M"
+        - "master"
+        - "-c"
+        - "wordpress-mysql-0"
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-persistent-storage # 공유 volume 이름 지정
+        ports:
+        - containerPort: 1556
+          name: pbx
+          protocol: TCP
+        - containerPort: 13724
+          name: vnetd
+          protocol: TCP
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+      - name: config-volume
+        configMap:
+          name: mysql-config
+          optional: true

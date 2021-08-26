@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: deploy-using-kubectl
+  namespace: tekton
+spec:
+  serviceAccountName: cluster-sa
+  taskRef:
+    name: deploy-using-kubectl
+  resources:
+    inputs:
+    - name: git-source
+      resourceRef:
+        name: jerry-git
+    outputs:
+    - name: image-repo
+      resourceRef:
+        name: board-image
+  params:
+  - name: path
+    value: "/deploy/tomcat-board.yml"
+  - name: imageTag
+    value: "1.0.1"
+  - name: yamlPathToImage
+    value: "$(resources.outputs.image-repo.url)"

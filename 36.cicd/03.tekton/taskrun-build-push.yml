@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: build-push
+  namespace: tekton
+spec:
+  serviceAccountName: cluster-sa
+  taskRef:
+    name: build-push
+  params:
+  - name: pathToDockerFile
+    value: tomcat-board.dockerfile
+    # value: Dockerfile
+  - name: pathToContext
+    value: $(resources.inputs.git-source.path)/src
+  - name: imageTag
+    value: "1.0.1"
+  resources:
+    inputs:
+      - name: git-source
+        resourceRef:
+          name: jerry-git
+    outputs:
+      - name: image-repo
+        resourceRef:
+          name: board-image
