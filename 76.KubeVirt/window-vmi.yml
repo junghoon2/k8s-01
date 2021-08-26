@@ -1,0 +1,39 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+ name: centos1
+ annotations:
+    diamanti.com/endpoint0: '{"network":"green","perfTier":"high"}'
+spec:
+ running: false
+ template:
+   metadata:
+     labels:
+       kubevirt.io/domain: centos1
+   spec:
+     domain:
+       ioThreadsPolicy: auto
+       cpu:
+         cores: 8
+       devices:
+         blockMultiQueue: true
+         disks:
+         - disk:
+             bus: virtio
+           name: harddrive
+         - disk:
+             bus: virtio
+           name: harddrive2
+           dedicatedIOThread: true
+       machine:
+         type: q35
+       resources:
+         requests:
+           memory: 16G
+     volumes:
+     - name: harddrive
+       persistentVolumeClaim:
+         claimName: centos1-os
+     - name: harddrive2
+       persistentVolumeClaim:
+         claimName: centos1-data

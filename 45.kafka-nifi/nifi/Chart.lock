@@ -1,0 +1,12 @@
+dependencies:
+- name: zookeeper
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.23.0
+- name: nifi-registry
+  repository: https://dysnix.github.io/charts/
+  version: 0.3.2
+- name: ca
+  repository: ""
+  version: 1.0.1
+digest: sha256:6d9c2cb240360a449d93f272d10290dccef93e6495101a59255e8eb49bc345e6
+generated: "2021-06-21T11:54:38.244171343Z"

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment01
+  labels:
+    app: nginx  # Deploy Label 이름 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx  # Service에서 사용할 Label 
+    spec:
+      containers:
+      - name: nginx
+        image: nginxdemos/hello

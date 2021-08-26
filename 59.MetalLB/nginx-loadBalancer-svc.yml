@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  namespace: nginx
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+  type: LoadBalancer  # type만 LoadBalancer로 변경하시면 됩니다.
+  loadBalancerIP: 172.17.30.178  # IP 지정이 가능합니다.

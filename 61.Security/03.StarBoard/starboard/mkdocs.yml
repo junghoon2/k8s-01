@@ -1,0 +1,72 @@
+site_name: Starboard
+site_url: https://aquasecurity.github.io/starboard/
+site_description: Kubernetes-native security toolkit
+docs_dir: docs/
+repo_name: GitHub
+repo_url: https://github.com/aquasecurity/starboard
+edit_uri: ""
+
+nav:
+  - Introduction: index.md
+  - Starboard CLI:
+      - Overview: cli/index.md
+      - Installation:
+          - From the Binary Releases: cli/installation/binary-releases.md
+          - Krew: cli/installation/krew.md
+          - Docker: cli/installation/docker.md
+          - From Source (Linux, macOS): cli/installation/source.md
+      - Getting Started: cli/getting-started.md
+      - Troubleshooting: cli/troubleshooting.md
+  - Starboard Operator:
+      - Overview: operator/index.md
+      - Installation:
+          - kubectl: operator/installation/kubectl.md
+          - Helm: operator/installation/helm.md
+          - Operator Lifecycle Manager: operator/installation/olm.md
+      - Getting Started: operator/getting-started.md
+      - Configuration: operator/configuration.md
+  - Starboard Settings: settings.md
+  - Integrations:
+      - Vulnerability Scanners:
+          - Overview: integrations/vulnerability-scanners/index.md
+          - Trivy: integrations/vulnerability-scanners/trivy.md
+          - Aqua Enterprise: integrations/vulnerability-scanners/aqua-enterprise.md
+      - Private Registries: integrations/private-registries.md
+      - Managed Registries: integrations/managed-registries.md
+      - Octant Plugin: integrations/octant.md
+      - Lens Extension: integrations/lens.md
+  - Custom Resource Definitions: crds.md
+  - Frequently Asked Questions: faq.md
+
+theme:
+  name: material
+  language: 'en'
+  logo: images/starboard-icon-white.svg
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition
+
+# All data defined under extra is automatically exposed as a variable and can
+# be used from the template. For example, {{ var.version }}.
+#
+# Requires pip install mike and pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
+extra:
+  generator: false
+  version:
+    method: mike
+  var:
+    tag: "v0.9.1"
+    tag_prev: "v0.9.0"
+    build:
+      version: "0.9.1"
+      commit: "d36f69e8890e178c444bb78e174e808e992405b9"
+      date: "2021-02-10T21:13:52Z"
+    chart:
+      version: 0.4.1
+
+# Requires pip install mkdocs-macros-plugin
+plugins:
+  - search
+  - macros

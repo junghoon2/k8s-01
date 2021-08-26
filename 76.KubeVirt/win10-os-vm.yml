@@ -1,0 +1,47 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  annotations:
+    kubevirt.io/latest-observed-api-version: v1
+    kubevirt.io/storage-observed-api-version: v1alpha3
+    diamanti.com/endpoint0: '{"network":"blue","perfTier":"high"}'
+  name: windows-10-os-jerry
+  namespace: default
+spec:
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: windows-10-os-jerry
+    spec:
+      domain:
+        ioThreadsPolicy: auto
+        cpu:
+          cores: 8
+        devices:
+          blockMultiQueue: true
+          disks:
+          - disk:
+              bus: virtio
+            name: harddrive
+          - disk:
+              bus: virtio
+            name: harddrive2
+            dedicatedIOThread: true
+        # firmware:
+        #   bootloader:
+        #     efi:
+        #       secureBoot: false
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8G
+      volumes:
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: win10-os-pvc
+      - name: harddrive2
+        persistentVolumeClaim:
+          claimName: win10-data

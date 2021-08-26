@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-hello
+  namespace: nginx
+  labels:
+    app: nginx  
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx # Service 등에서 참조할 Label 이름 
+    spec:
+      containers:
+      - name: nginx
+        image: nginxdemos/hello
+        # image: nginx

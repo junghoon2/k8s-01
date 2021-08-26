@@ -1,0 +1,76 @@
+name: build
+on:
+  push:
+    branches:
+      - 'main'
+    paths-ignore:
+      - 'README.md'
+      - 'samples/**'
+      - 'charts/**'
+      - 'docs/**'
+  pull_request:
+    branches:
+      - 'main'
+    paths-ignore:
+      - 'README.md'
+      - 'samples/**'
+      - 'charts/**'
+      - 'docs/**'
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Unshallow
+        run: git fetch --prune --unshallow
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14
+
+      - name: Cache Go modules
+        uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      
+      - name: gofmt check
+        run: |
+         if [ "$(gofmt -s -l . | wc -l)" -ne 0 ] 
+         then
+          echo "The following files were found to be not go formatted:"
+          gofmt -s -l .
+          echo "Please run 'make fmt' to go format the above files."
+          exit 1
+         fi
+
+      - name: golangci-lint
+        uses: reviewdog/action-golangci-lint@v1
+
+      - name: docker images build (AMD64)
+        run: |
+          make docker-build-all-amd64
+
+      - name :  Create Kind Cluster and setup kustomize
+        run: |
+          make create-e2e-infrastruture
+
+      - name: e2e testing
+        run: |
+          echo ">>> Install Kyverno"
+          sed 's/imagePullPolicy:.*$/imagePullPolicy: IfNotPresent/g' ${GITHUB_WORKSPACE}/definitions/install.yaml | kubectl apply -f -
+          kubectl apply -f ${GITHUB_WORKSPACE}/definitions/github/rbac.yaml
+          chmod a+x ${GITHUB_WORKSPACE}/scripts/verify-deployment.sh
+          sleep 50
+          echo ">>> Check kyverno"
+          kubectl get pods -n kyverno
+          ${GITHUB_WORKSPACE}/scripts/verify-deployment.sh -n kyverno  kyverno
+          echo ">>> Run Kyverno e2e test"
+          make test-e2e
+

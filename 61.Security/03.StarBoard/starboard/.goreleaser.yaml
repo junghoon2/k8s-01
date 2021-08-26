@@ -1,0 +1,99 @@
+release:
+  draft: false
+  prerelease: auto
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+before:
+  hooks:
+    - go mod download
+builds:
+  - id: starboard
+    main: ./cmd/starboard/main.go
+    binary: starboard
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+  - id: starboard-operator
+    main: ./cmd/starboard-operator/main.go
+    binary: starboard-operator
+    goos:
+      - linux
+    goarch:
+      - amd64
+  - id: starboard-scanner-aqua
+    main: ./cmd/scanner-aqua/main.go
+    binary: starboard-scanner-aqua
+    goos:
+      - linux
+    goarch:
+      - amd64
+archives:
+  - name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    builds:
+      - starboard
+    replacements:
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .FullCommit }}"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs'
+      - '^test'
+      - '^release'
+dockers:
+  - dockerfile: build/starboard/Dockerfile
+    image_templates:
+      - "docker.io/aquasec/starboard:{{ .Version }}"
+      - "public.ecr.aws/aquasecurity/starboard:{{ .Version }}"
+    ids:
+      - starboard
+    build_flag_templates:
+      - "--label=org.label-schema.schema-version=1.0"
+      - "--label=org.label-schema.name={{ .ProjectName }}"
+      - "--label=org.label-schema.description=Command line interface for Starboard"
+      - "--label=org.label-schema.vendor=Aqua Security"
+      - "--label=org.label-schema.version={{ .Version }}"
+      - "--label=org.label-schema.build-date={{ .Date }}"
+      - "--label=org.label-schema.vcs=https://github.com/aquasecurity/starboard"
+      - "--label=org.label-schema.vcs-ref={{ .FullCommit }}"
+  - dockerfile: build/starboard-operator/Dockerfile
+    image_templates:
+      - "docker.io/aquasec/starboard-operator:{{ .Version }}"
+      - "public.ecr.aws/aquasecurity/starboard-operator:{{ .Version }}"
+    ids:
+      - starboard-operator
+    build_flag_templates:
+      - "--label=org.label-schema.schema-version=1.0"
+      - "--label=org.label-schema.name=starboard-operator"
+      - "--label=org.label-schema.description=Keeps Starboard resources updated"
+      - "--label=org.label-schema.vendor=Aqua Security"
+      - "--label=org.label-schema.version={{ .Version }}"
+      - "--label=org.label-schema.build-date={{ .Date }}"
+      - "--label=org.label-schema.vcs=https://github.com/aquasecurity/starboard"
+      - "--label=org.label-schema.vcs-ref={{ .FullCommit }}"
+  - dockerfile: build/scanner-aqua/Dockerfile
+    image_templates:
+      - "docker.io/aquasec/starboard-scanner-aqua:{{ .Version }}"
+      - "public.ecr.aws/aquasecurity/starboard-scanner-aqua:{{ .Version }}"
+    ids:
+      - starboard-scanner-aqua
+    build_flag_templates:
+      - "--label=org.label-schema.schema-version=1.0"
+      - "--label=org.label-schema.name=starboard-scanner-aqua"
+      - "--label=org.label-schema.description=Aqua scanner for Starboard"
+      - "--label=org.label-schema.vendor=Aqua Security"
+      - "--label=org.label-schema.version={{ .Version }}"
+      - "--label=org.label-schema.build-date={{ .Date }}"
+      - "--label=org.label-schema.vcs=https://github.com/aquasecurity/starboard"
+      - "--label=org.label-schema.vcs-ref={{ .FullCommit }}"

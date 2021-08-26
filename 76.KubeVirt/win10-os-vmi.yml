@@ -1,0 +1,51 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachineInstance
+metadata:
+  annotations:
+    kubevirt.io/latest-observed-api-version: v1
+    kubevirt.io/storage-observed-api-version: v1alpha3
+  labels:
+    kubevirt.io/domain: windows-10-os
+    kubevirt.io/nodeName: dia01
+  name: windows-10-os
+  namespace: default
+spec:
+  domain:
+    cpu:
+      cores: 4
+    devices:
+      disks:
+      - disk:
+          bus: virtio
+        name: harddrive
+      - cdrom:
+          bus: sata
+          readonly: true
+          tray: closed
+        name: virtiocontainerdisk
+      interfaces:
+      - name: default
+    features:
+      acpi:
+        enabled: true
+    firmware:
+      bootloader:
+        efi:
+          secureBoot: false
+      uuid: eea3c17c-319e-5a43-8bb8-b3cc5ad859b2
+    machine:
+      type: q35
+    resources:
+      requests:
+        cpu: 100m
+        memory: 8G
+  networks:
+  - name: default
+  volumes:
+  - name: harddrive
+    persistentVolumeClaim:
+      claimName: windows-10-data
+  - containerDisk:
+      image: kubevirt/virtio-container-disk
+      imagePullPolicy: Always
+    name: virtiocontainerdisk

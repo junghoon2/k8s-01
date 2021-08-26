@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 172.17.30.181 - 172.17.30.185
+
+# - 172.17.16.174 - 172.17.16.174 단일 IP 지정 방법
+  # - 172.17.30.171 - 172.17.30.179
+
+# - 172.17.29.111 - 172.17.29.150
+# - 172.17.16.172, error, invalid CIDR
+# - 172.17.16.174 - 172.17.16.174
+# - 10.10.100.190 - 10.10.100.200

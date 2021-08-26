@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: sysbench
+  annotations:
+    diamanti.com/endpoint0: '{"network":"red", "perfTier":"high"}'
+  name: sysbench
+spec:
+  containers:
+  - image: severalnines/sysbench
+    name: sysbench
+    resources:
+      requests:
+        cpu: "4"
+        memory: 16Gi
+      limits:
+        cpu: "4"
+        memory: 16Gi
+    command:
+    - "/bin/sh"
+    - "-c"
+    - "sleep inf"
+    volumeMounts:
+    - name: mariadb-pvc
+      mountPath: /var/lib/mysql
+  volumes:
+  - name: mariadb-pvc
+    persistentVolumeClaim:
+      claimName: mariadb-pvc

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  # name: mysql-pv-claim  # 기존 PVC 이름과 동일하게 설정
+  name: redis-pvc-from-snap  # 기존 PVC 이름과 동일하게 설정
+  namespace: yelb
+spec:
+  # storageClassName: rook-ceph-block  # PVC 복구에 사용할 StorageClass 지정 
+  storageClassName: openebs-hostpath  # PVC 복구에 사용할 StorageClass 지정 
+  # storageClassName: high  # PVC 복구에 사용할 StorageClass 지정 
+  dataSource:
+    name: k10-csi-snap-266v5d9rx8qctcx6
+    # name: redis-snapshot-50g  # 생성한 snapshot 이름 지정
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi  
