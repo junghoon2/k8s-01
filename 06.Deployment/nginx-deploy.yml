@@ -5,7 +5,7 @@ metadata:
     deployment.kubernetes.io/revision: "1"
   labels:
     app: nginx
-  name: nginx
+  name: nginx-1-19-8
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -26,7 +26,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: nginx:no-ver
+      - image: nginx:1.19.8
         imagePullPolicy: Always
         name: nginx
         terminationMessagePath: /dev/termination-log

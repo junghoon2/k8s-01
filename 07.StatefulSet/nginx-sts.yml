@@ -43,7 +43,7 @@ spec:
     spec:
       accessModes: [ "ReadWriteOnce" ]
       # storageClassName: "rook-cephfs"
-      storageClassName: "high"
+      storageClassName: "high2m"
       resources:
         requests:
-          storage: 1Gi   
+          storage: 10Gi   
