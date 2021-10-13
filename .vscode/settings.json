@@ -1,0 +1,10 @@
+{
+  "git.ignoreLimitWarning": true,
+  "cloudcode.kubeconfigs": [
+    {
+      "name": "\\\\wsl$\\Ubuntu\\home\\spkr\\.kube\\config",
+      "configPath": "\\\\wsl$\\Ubuntu\\home\\spkr\\.kube\\config"
+    }
+  ],
+  "cloudcode.active-kubeconfig": "\\\\wsl$\\Ubuntu\\home\\spkr\\.kube\\config"
+}

@@ -10,7 +10,8 @@ spec:
   selector:
     app: wordpress
     tier: frontend
-  type: LoadBalancer
+  type: NodePort
+  # type: LoadBalancer
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -25,7 +26,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: Deployment

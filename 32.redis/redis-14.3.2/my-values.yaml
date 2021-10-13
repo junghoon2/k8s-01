@@ -62,7 +62,7 @@ image:
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -340,7 +340,7 @@ master:
   persistence:
     ## @param master.persistence.enabled Enable persistence on Redis(TM) master nodes using Persistent Volume Claims
     ##
-    enabled: true
+    enabled: false
     ## @param master.persistence.path The path the volume will be mounted at on Redis(TM) master containers
     ## NOTE: Useful when using different Redis(TM) images
     ##
@@ -640,7 +640,7 @@ replica:
   persistence:
     ## @param replica.persistence.enabled Enable persistence on Redis(TM) replicas nodes using Persistent Volume Claims
     ##
-    enabled: true
+    enabled: false
     ## @param replica.persistence.path The path the volume will be mounted at on Redis(TM) replicas containers
     ## NOTE: Useful when using different Redis(TM) images
     ##

@@ -9,8 +9,10 @@ spec:
     resources:
       limits:
         cpu: "1"
+        memory: 1Gb
       requests:
         cpu: "0.5"
+        memory: 100mb
     args:
     - -cpus
     - "2"
