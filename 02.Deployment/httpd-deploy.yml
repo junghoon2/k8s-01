@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: httpd
+  namespace: httpd
   labels:
     app: httpd  #service가 바라보는 label이 아님. 주의.
 spec:

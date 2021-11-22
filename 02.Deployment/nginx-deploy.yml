@@ -5,7 +5,7 @@ metadata:
     deployment.kubernetes.io/revision: "1"
   labels:
     app: nginx
-  name: nginx-1-19
+  name: nginx
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -24,6 +24,7 @@ spec:
       creationTimestamp: null
       labels:
         app: nginx
+        tier: fe
     spec:
       containers:
       - image: nginx:1.19

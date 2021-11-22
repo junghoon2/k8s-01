@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx
+  namespace: argocd  # 반드시 argocd namespace여야 한다
+spec:
+  destination:
+    namespace: nginx
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 01.NGINX
+    repoURL: https://gitlab.spk.io/spk/mytest.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true

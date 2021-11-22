@@ -12,6 +12,8 @@ spec:
       # storage: 1Ti  # 노드 Disk 용량을 넘으면 할당이 안 됨
   # storageClassName: "openebs-hostpath"  ## SC 지정, default 자동 할당 안됨
   # storageClassName: "high" 
-  storageClassName: "rook-ceph-block"  
+  # storageClassName: "rook-ceph-block"  
   # storageClassName: "ebs-sc" 
   # storageClassName: "high"  
+  storageClassName: "rook-nfs-share1" 
+  

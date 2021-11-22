@@ -1,3 +1,7 @@
+// # Run 5 VUs, splitting 10 iterations between them.
+// k6 run -u 5 -i 10 script.js
+//  k6 run -u 5 script.js 
+
 import http from 'k6/http';
 import { check, group, sleep } from 'k6';
 

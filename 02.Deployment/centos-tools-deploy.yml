@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: cent-tools
-  name: cent-tools
+  name: cent-tools01
   #  namespace: elastic
 spec:
   progressDeadlineSeconds: 600

@@ -7,8 +7,7 @@ spec:
   ports:
   - name: tcp
     port: 80
-  #   protocol: TCP
-  #   targetPort: 5201
-  # sessionAffinity: None
+    protocol: TCP
+    targetPort: 80
   selector:  # 선택해야 할 POD 선택
     app: nginx  # Deploy Label 과 동일

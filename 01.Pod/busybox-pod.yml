@@ -6,7 +6,8 @@ metadata:
 spec:
   containers:
   - name: busybox
-    image: busybox
+    # image: busybox
+    image: busybox:1.28.0
     # args:  # entrypoint 
     # - sleep
     # - "1000000"
@@ -20,7 +21,7 @@ spec:
     command:
     - "/bin/sh"
     - "-c"
-    - "sleep inf"
+    - "sleep 1000"
 
     # volumeMounts:  
     # - name: date-vol  # Volume 이름

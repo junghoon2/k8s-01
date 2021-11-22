@@ -270,7 +270,7 @@ extraContainerVolumes: []
 persistence:
   type: pvc
   enabled: true
-  storageClassName: rook-ceph-block
+  storageClassName: 
   accessModes:
     - ReadWriteOnce
   size: 10Gi

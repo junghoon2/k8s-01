@@ -478,7 +478,7 @@ alertmanager:
     storage:
     volumeClaimTemplate:
       spec:
-        storageClassName: rook-ceph-block
+        storageClassName: 
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
@@ -2213,7 +2213,7 @@ prometheus:
     ##
      volumeClaimTemplate:
        spec:
-         storageClassName: rook-ceph-block
+         storageClassName: 
          accessModes: ["ReadWriteOnce"]
          resources:
            requests:
