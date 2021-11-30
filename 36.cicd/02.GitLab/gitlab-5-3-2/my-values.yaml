@@ -603,7 +603,7 @@ global:
       certName: "tls.crt"
 
   ## Timezone for containers.
-  time_zone: UTC
+  time_zone: Asia/Seoul
 
   ## Global Service Annotations and Labels
   service:
