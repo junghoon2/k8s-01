@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/podIP: 10.233.96.108/32
+    cni.projectcalico.org/podIPs: 10.233.96.108/32
+  labels:
+    app: polaris
+    app.kubernetes.io/instance: polaris
+    app.kubernetes.io/name: polaris
+    component: dashboard
+    pod-template-hash: 6bcfcd6968
+  name: polaris-dashboard-6bcfcd6968-krshn
+  namespace: polaris
+spec:
+  containers:
+  - command:
+    - polaris
+    - dashboard
+    - --port
+    - "8080"
+    image: quay.io/fairwinds/polaris:4.2
+    imagePullPolicy: Always
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 20
+    name: dashboard
+    ports:
+    - containerPort: 8080
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 20
+    resources:
+      limits:
+        cpu: 150m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-blgz2
+      readOnly: true
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  serviceAccountName: polaris
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-blgz2
+    projected:
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              fieldPath: metadata.namespace
+            path: namespace
