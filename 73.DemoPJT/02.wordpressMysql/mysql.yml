@@ -19,7 +19,7 @@ metadata:
   labels:
     app: wordpress
 spec:
-  storageClassName: "rook-ceph-block"
+  storageClassName: "openebs-hostpath"
   # storageClassName: "ebs-sc"
   accessModes:
     - ReadWriteOnce
@@ -31,8 +31,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress-mysql
-  labels:
-    app: wordpress
 spec:
   selector:
     matchLabels:
