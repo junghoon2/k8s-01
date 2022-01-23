@@ -12,4 +12,5 @@ spec:
     # nodePort: 30080
   selector:
     app: httpd
+    heritage: helm
   type: LoadBalancer
