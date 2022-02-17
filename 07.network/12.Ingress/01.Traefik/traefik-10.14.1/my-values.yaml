@@ -125,7 +125,7 @@ providers:
       # - "default"
 
   kubernetesIngress:
-    enabled: true
+    enabled: false  # 추가 ingress 사용하지 않음
     allowExternalNameServices: false
     # labelSelector: environment=production,method=traefik
     namespaces: []
@@ -352,7 +352,14 @@ service:
   enabled: true
   type: LoadBalancer
   # Additional annotations applied to both TCP and UDP services (e.g. for cloud provider specific config)
-  annotations: {}
+  annotations:
+    # Note that the backend talks over HTTP.
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: (https|http|ssl|tcp)
+    # TODO: Fill in with the ARN of your certificate.
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-northeast-2:886632063643:certificate/c221ac2a-d7de-4b29-a629-9d9eaeb1cf47
+    # Only run SSL on the port named "https" below.
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+
   # Additional annotations for TCP service only
   annotationsTCP: {}
   # Additional annotations for UDP service only

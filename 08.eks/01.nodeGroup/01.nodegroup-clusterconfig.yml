@@ -1,0 +1,12 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: jerry-dev
+  region: us-west-2
+managedNodeGroups:
+  - name: ng-1-workers
+    labels: { role: workers }
+    instanceType: m6g.large
+    desiredCapacity: 2
+    volumeSize: 80
+    privateNetworking: true

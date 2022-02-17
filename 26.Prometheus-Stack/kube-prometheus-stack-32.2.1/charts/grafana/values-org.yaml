@@ -218,13 +218,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources:
- limits:
-   cpu: 100m
-   memory: 128Mi
- requests:
-   cpu: 100m
-   memory: 128Mi
+resources: {}
+#  limits:
+#    cpu: 100m
+#    memory: 128Mi
+#  requests:
+#    cpu: 100m
+#    memory: 128Mi
 
 ## Node labels for pod assignment
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -274,11 +274,11 @@ extraContainerVolumes: []
 ##
 persistence:
   type: pvc
-  enabled: true
-  storageClassName: gp2
+  enabled: false
+  # storageClassName: default
   accessModes:
     - ReadWriteOnce
-  size: 5Gi
+  size: 10Gi
   # annotations: {}
   finalizers:
     - kubernetes.io/pvc-protection
@@ -325,7 +325,7 @@ initChownData:
 
 # Administrator credentials when not using an existing secret (see below)
 adminUser: admin
-# adminPassword: Switch1!
+# adminPassword: strongpassword
 
 # Use an existing secret for the admin user.
 admin:
