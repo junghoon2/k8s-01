@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: elastic-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: elastic
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "elastic-kr-dev.switchboard.pro"
+    http:
+      paths:
+      - path: /kr/es
+        pathType: Prefix
+        backend:
+          service:
+            name: elasticsearch-master
+            port:
+              number: 9200
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: elastic-ingress
+#   namespace: elastic  # ingress 적용되는 네임스페이스 지정
+# spec:
+#   rules:
+#   - host: elastic-kr-dev.switchboard.pro
+#     http:
+#       paths:
+#         - path: /
+#           backend:
+#             serviceName: elasticsearch-master
+#             servicePort: 9200
+#         # - path: /kr/grafana
+#         #   backend:
+#         #     serviceName: vanilla-service
+#         #     servicePort: 80
