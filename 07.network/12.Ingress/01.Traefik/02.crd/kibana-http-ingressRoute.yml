@@ -5,9 +5,9 @@ metadata:
   namespace: elastic-system
 spec:
   entryPoints:
-  - web
+  - websecure
   routes:
-  - match: Host(`kibana.stage.eks.switchboard.pro`)
+  - match: Host(`stg.ap-northeast-2.switchboard.pro`) && PathPrefix(`/kibana`)
     kind: Rule
     services:
     - name: kibana-kibana
