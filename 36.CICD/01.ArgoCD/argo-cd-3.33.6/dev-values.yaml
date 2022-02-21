@@ -16,7 +16,7 @@ global:
     # -- Overrides the global ArgoCD image tag whose default is the chart appVersion
     tag: ""
     # -- If defined, a imagePullPolicy applied to all ArgoCD deployments
-    imagePullPolicy: IfNotPresent
+    imagePullPolicy: Always
   # -- Annotations for the all deployed pods
   podAnnotations: {}
   # -- Labels for the all deployed pods
@@ -523,10 +523,10 @@ dex:
     # readOnlyRootFilesystem: true
 
 # -- Resource limits and requests for dex
-  resources: {}
-  #  limits:
-  #    cpu: 50m
-  #    memory: 64Mi
+  resources:
+   limits:
+     cpu: 50m
+     memory: 64Mi
   #  requests:
   #    cpu: 10m
   #    memory: 32Mi
@@ -645,10 +645,10 @@ redis:
     automountServiceAccountToken: false
 
   # -- Resource limits and requests for redis
-  resources: {}
-  #  limits:
-  #    cpu: 200m
-  #    memory: 128Mi
+  resources: 
+   limits:
+     cpu: 200m
+     memory: 128Mi
   #  requests:
   #    cpu: 100m
   #    memory: 64Mi
@@ -902,10 +902,10 @@ server:
     # readOnlyRootFilesystem: true
 
   # -- Resource limits and requests for the Argo CD server
-  resources: {}
-  #  limits:
-  #    cpu: 100m
-  #    memory: 128Mi
+  resources:
+   limits:
+     cpu: 100m
+     memory: 128Mi
   #  requests:
   #    cpu: 50m
   #    memory: 64Mi
