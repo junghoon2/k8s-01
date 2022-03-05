@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafanaIngressRoute
+  namespace: default
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`eks.staging.switchboard.pro`)
+    kind: Rule
+    services:
+    - name: prom-operator-grafana
+      port: 80
+  # - match: Host(`switchboard.pro`) && PathPrefix(`/grafana-stg`)
+  #   kind: Rule
+  #   services:
+  #   - name: prom-operator-grafana
+  #     port: 80

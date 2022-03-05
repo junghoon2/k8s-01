@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: elastic-ingressroute
+  namespace: elastic-system
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`kr-stg-elastic.switchboard.pro`)
+    kind: Rule
+    services:
+    - name: elasticsearch-master
+      port: 9200

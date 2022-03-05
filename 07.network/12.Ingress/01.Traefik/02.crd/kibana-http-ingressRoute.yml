@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kibanaingressroute
+  namespace: elastic-system
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`stg.ap-northeast-2.switchboard.pro`) && PathPrefix(`/kibana`)
+    kind: Rule
+    services:
+    - name: kibana-kibana
+      port: 5601
+  # - match: Host(`switchboard.pro`) && PathPrefix(`/grafana-stg`)
+  #   kind: Rule
+  #   services:
+  #   - name: prom-operator-grafana
+  #     port: 80
