@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc1
+spec:
+  ports:
+    - name: svc1-webport
+      port: 80
+      targetPort: 80
+  selector:
+    app: webpod
+  type: LoadBalancer
+  #externalTrafficPolicy: Local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc2
+spec:
+  ports:
+    - name: svc2-webport
+      port: 80
+      targetPort: 80
+  selector:
+    app: webpod
+  type: LoadBalancer
+  #externalTrafficPolicy: Local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc3
+spec:
+  ports:
+    - name: svc3-webport
+      port: 80
+      targetPort: 80
+  selector:
+    app: webpod
+  type: LoadBalancer

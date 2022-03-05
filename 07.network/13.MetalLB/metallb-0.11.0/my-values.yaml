@@ -23,10 +23,10 @@ existingConfigMap: ""
 # available options.
 configInline:
   address-pools:
-   - name: default
-     protocol: layer2
-     addresses:
-     - 172.17.29.65 - 172.17.29.69
+    - name: default
+      protocol: layer2
+      addresses:
+        - 172.17.29.201 - 172.17.29.220
 
 rbac:
   # create specifies whether to install and use RBAC rules.
@@ -58,7 +58,6 @@ prometheus:
 
   # Prometheus Operator PodMonitors
   podMonitor:
-
     # enable support for Prometheus Operator
     enabled: false
 
@@ -88,7 +87,6 @@ prometheus:
 
   # Prometheus Operator alertmanager alerts
   prometheusRule:
-
     # enable alertmanager alerts
     enabled: false
 
@@ -156,10 +154,11 @@ controller:
     # nobody
     runAsUser: 65534
     fsGroup: 65534
-  resources: {}
+  resources:
+    {}
     # limits:
-      # cpu: 100m
-      # memory: 100Mi
+    # cpu: 100m
+    # memory: 100Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -204,10 +203,11 @@ speaker:
   ## By default secretName: {{ "metallb.fullname" }}-memberlist
   ##
   # secretName:
-  resources: {}
+  resources:
+    {}
     # limits:
-      # cpu: 100m
-      # memory: 100Mi
+    # cpu: 100m
+    # memory: 100Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}

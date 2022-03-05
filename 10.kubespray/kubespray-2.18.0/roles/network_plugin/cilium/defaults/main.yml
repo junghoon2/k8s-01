@@ -19,15 +19,15 @@ cilium_memory_requests: 64M
 cilium_cpu_requests: 100m
 
 # Overlay Network Mode
-cilium_tunnel_mode: vxlan
+cilium_tunnel_mode: disabled
 # Optional features
-cilium_enable_prometheus: false
+cilium_enable_prometheus: true
 # Enable if you want to make use of hostPort mappings
-cilium_enable_portmap: false
+cilium_enable_portmap: true
 # Monitor aggregation level (none/low/medium/maximum)
 cilium_monitor_aggregation: medium
 # Kube Proxy Replacement mode (strict/probe/partial)
-cilium_kube_proxy_replacement: probe
+cilium_kube_proxy_replacement: strict
 
 # If upgrading from Cilium < 1.5, you may want to override some of these options
 # to prevent service disruptions. See also:
@@ -46,17 +46,17 @@ cilium_deploy_additionally: false
 # You wil also have to specify the variable `cilium_native_routing_cidr` to
 # make this work. Please refer to the cilium documentation for more
 # information about this kind of setups.
-cilium_auto_direct_node_routes: false
-cilium_native_routing_cidr: ""
+cilium_auto_direct_node_routes: true
+cilium_native_routing_cidr: "172.17.16.0/20"
 
 # IPsec based transparent encryption between nodes
 cilium_ipsec_enabled: false
 
 # Hubble
 ### Enable Hubble without install
-cilium_enable_hubble: false
+cilium_enable_hubble: true
 ### Enable Hubble Metrics
-cilium_enable_hubble_metrics: false
+cilium_enable_hubble_metrics: true
 ### if cilium_enable_hubble_metrics: true
 cilium_hubble_metrics: {}
 # - dns
@@ -66,7 +66,7 @@ cilium_hubble_metrics: {}
 # - icmp
 # - http
 ### Enable Hubble install
-cilium_hubble_install: false
+cilium_hubble_install: true
 ### Enable auto generate certs if cilium_hubble_install: true
 cilium_hubble_tls_generate: false
 
