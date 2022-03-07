@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-headless
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: 9000
+      targetPort: 8080
+  selector:
+    app: sample-app
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sample-statefulset-headless
+spec:
+  serviceName: sample-headless
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample-app # has to match .spec.template.metadata.labels
+  minReadySeconds: 5 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: sample-app # has to match .spec.template.metadata.labels
+    spec:
+      terminationGracePeriodSeconds: 5 # by default is 10
+      containers:
+        - name: websrv
+          image: k8s.gcr.io/echoserver:1.5
+          ports:
+            - containerPort: 8080
+              name: web
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: net-pod
+spec:
+  nodeName: k8s-m
+  containers:
+    - name: netshoot-pod
+      image: nicolaka/netshoot
+      command: ["tail"]
+      args: ["-f", "/dev/null"]
+  terminationGracePeriodSeconds: 0
