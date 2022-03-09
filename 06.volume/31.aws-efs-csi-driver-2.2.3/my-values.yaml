@@ -8,7 +8,7 @@ fullnameOverride: ""
 replicaCount: 2
 
 image:
-  repository: 602401143452.dkr.ecr.us-west-2.amazonaws.com/eks/aws-efs-csi-driver
+  repository: amazon/aws-efs-csi-driver
   tag: "v1.3.6"
   pullPolicy: IfNotPresent
 
@@ -69,7 +69,7 @@ controller:
   affinity: {}
   # Specifies whether a service account should be created
   serviceAccount:
-    create: true
+    create: false
     name: efs-csi-controller-sa
     annotations: {}
     ## Enable if EKS IAM for SA is used

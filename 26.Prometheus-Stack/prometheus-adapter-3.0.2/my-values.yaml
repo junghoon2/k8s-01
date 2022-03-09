@@ -2,8 +2,10 @@
 affinity: {}
 
 image:
-  repository: k8s.gcr.io/prometheus-adapter/prometheus-adapter
-  tag: v0.9.1
+  repository: directxman12/k8s-prometheus-adapter-amd64
+  tag: v0.8.3
+  # repository: k8s.gcr.io/prometheus-adapter/prometheus-adapter
+  # tag: v0.9.1
   pullPolicy: IfNotPresent
 
 logLevel: 4
@@ -28,16 +30,16 @@ customLabels: {}
 # Url to access prometheus
 prometheus:
   # Value is templated
-  url: http://prometheus.default.svc
+  url: http://prometheus-kube-prometheus-prometheus
   port: 9090
-  path: ""
+  path: "/"
 
 replicas: 1
 
 # k8s 1.21 needs fsGroup to be set for non root deployments
 # ref: https://github.com/kubernetes/kubernetes/issues/70679
-podSecurityContext:
-  fsGroup: 10001
+# podSecurityContext:
+#   fsGroup: 10001
 
 rbac:
   # Specifies whether RBAC resources should be created
@@ -78,8 +80,65 @@ resources: {}
   #   memory: 128Mi
 
 rules:
-  default: true
-  custom: []
+  default: false
+  custom:
+    - metricsQuery: avg(avg_over_time(<<.Series>>[7m])) by (group,namespace)
+      name:
+        as: worker
+        matches: ""
+      resources:
+        overrides:
+          namespace:
+            resource: namespace
+          group:
+            resource: pod
+      seriesQuery: worker_usage
+    - metricsQuery: sum(sum_over_time(<<.Series>>[5m:5s])) by (service) / sum(sum_over_time(connected_worker[5m:5s]))
+        by (service) * 100
+      name:
+        as: worker
+        matches: ""
+      resources:
+        overrides:
+          namespace:
+            resource: namespace
+          service:
+            resource: service
+      seriesQuery: processing_worker
+    - metricsQuery: sum(<<.Series>>) by (service)
+      name:
+        as: rtf
+        matches: ""
+      resources:
+        overrides:
+          namespace:
+            resource: namespace
+          service:
+            resource: service
+      seriesQuery: rtf_realtime
+
+    # - metricsQuery: avg(avg_over_time(<<.Series>>[7m])) by (group,namespace)
+    #   name:
+    #     as: worker
+    #     matches: ""
+    #   resources:
+    #     overrides:
+    #       namespace:
+    #         resource: namespace
+    #       group:
+    #         resource: pod
+    #   seriesQuery: worker_usage
+    # - metricsQuery: sum(<<.Series>>) by (service)
+    #   name:
+    #     as: rtf
+    #     matches: ""
+    #   resources:
+    #     overrides:
+    #       namespace:
+    #         resource: namespace
+    #       service:
+    #         resource: service
+    #   seriesQuery: rtf_realtime
 # - seriesQuery: '{__name__=~"^some_metric_count$"}'
 #   resources:
 #     template: <<.Resource>>
