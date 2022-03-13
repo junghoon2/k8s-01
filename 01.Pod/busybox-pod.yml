@@ -7,7 +7,8 @@ spec:
   containers:
   - name: busybox
     # image: busybox
-    image: busybox:1.28.0
+    image: busybox:1.xx
+    # image: busybox:1.28.0
     # args:  # entrypoint 
     # - sleep
     # - "1000000"
@@ -26,7 +27,7 @@ spec:
     # volumeMounts:  
     # - name: date-vol  # Volume 이름
     #   mountPath: /data  # Mount 이름 
-  volumes:  # 어떤 Volume을 사용할 것인지
-  - name: date-vol
-    persistentVolumeClaim:
-      claimName: default01-pvc   
+  # volumes:  # 어떤 Volume을 사용할 것인지
+  # - name: date-vol
+  #   persistentVolumeClaim:
+  #     claimName: default01-pvc   
