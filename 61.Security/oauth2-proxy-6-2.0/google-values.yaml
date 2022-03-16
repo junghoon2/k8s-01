@@ -8,15 +8,15 @@ config:
   # Add config annotations
   annotations: {}
   # OAuth client ID
-  clientID: "XXXXXXX"
+  clientID: "447603235594-9lkt6a8o34530a2p8ct3puk926gh5a6h.apps.googleusercontent.com"
   # OAuth client secret
-  clientSecret: "XXXXXXXX"
+  clientSecret: "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"
   # Create a new secret with the following command
   # openssl rand -base64 32 | head -c 32 | base64
   # Use an existing secret for OAuth2 credentials (see secret.yaml for required fields)
   # Example:
   # existingSecret: secret
-  cookieSecret: "XXXXXXXXXXXXXXXX"
+  cookieSecret: "HpNYlE4WMBq0pVIuSNQSiuQIl4aCBnJu"
   # The name of the cookie that oauth2-proxy will create
   # If left empty, it will default to the release name
   cookieName: ""
@@ -28,7 +28,7 @@ config:
     # existingSecret: google-secret
   # Default configuration, to be overridden
   configFile: |-
-    email_domains = [ "*" ]
+    email_domains = [ "atlaslabs.ai" ]
     upstreams = [ "file:///dev/null" ]
   # Custom configuration file: oauth2_proxy.cfg
   # configFile: |-
