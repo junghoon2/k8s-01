@@ -4,10 +4,11 @@ metadata:
   annotations:
     diamanti.com/endpoint0: '{"network":"blue","perfTier":"high"}'
   name: centos7-test
-  namespace: test  # Namespace 지정
+  # namespace: test  # Namespace 지정
   labels:
     run: centos7
 spec:
+  hostNetwork: true
   containers:
   - name: centos7
     image: centos:7
@@ -15,3 +16,5 @@ spec:
       - "/bin/sh"
       - "-c"
       - "sleep inf"
+  nodeSelector:
+    nodetype: asterisk
