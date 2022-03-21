@@ -28,4 +28,4 @@ spec:
       volumes:  # 어떤 Volume을 사용할 것인지
       - name: date-vol
         persistentVolumeClaim:
-          claimName: default01-pvc   
+          claimName: pvc-shared-nlp-ner-worker   
