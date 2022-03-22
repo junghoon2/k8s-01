@@ -28,4 +28,18 @@ spec:
       volumes:  # 어떤 Volume을 사용할 것인지
       - name: date-vol
         persistentVolumeClaim:
-          claimName: gp3
+          claimName: default-pvc 
+      tolerations:
+      - key: nodetype
+        operator: Equal
+        value: kamailio
+        effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nodetype  ## Key 값 지정
+                operator: In  ## In, NotIn, Exists, DoesNotExist, Gt, Lt 사용 가능
+                values:
+                - kamailio
