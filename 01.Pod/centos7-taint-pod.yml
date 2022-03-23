@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    diamanti.com/endpoint0: '{"network":"blue","perfTier":"high"}'
+  name: centos7-test
+  # namespace: test  # Namespace 지정
+  labels:
+    run: centos7
+spec:
+  hostNetwork: true
+  containers:
+  - name: centos7
+    image: centos:7
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "sleep inf"
+  tolerations:
+    - key: nodetype
+      value: kamailio
+      operator: Equal
+      effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodetype  ## Key 값 지정
+            operator: In  ## In, NotIn, Exists, DoesNotExist, Gt, Lt 사용 가능
+            values:
+            - kamailio
+    # podAntiAffinity:
+    #   requiredDuringSchedulingIgnoredDuringExecution:
+    #   - labelSelector:
+    #       matchExpressions:
+    #       - key: app.kubernetes.io/name
+    #         operator: In
+    #         values:
+    #         - kamailio-enduser
+    #         - kamailio-proxy
+    #     topologyKey: "kubernetes.io/hostname"
