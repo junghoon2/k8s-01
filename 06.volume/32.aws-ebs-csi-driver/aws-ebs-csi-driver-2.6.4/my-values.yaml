@@ -146,7 +146,7 @@ node:
   nodeSelector: {}
   podAnnotations: {}
   podLabels: {}
-  tolerateAllTaints: false
+  tolerateAllTaints: true
   tolerations: []
   resources: {}
   serviceAccount:
