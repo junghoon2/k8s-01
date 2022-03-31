@@ -8,7 +8,7 @@ global:
 #   imagePullSecrets:
 #     - myRegistryKeySecretName
   # storageClass: rook-ceph-block
-  storageClass: local-path
+  storageClass: gp3
 
 ## Bitnami PostgreSQL image version
 ## ref: https://hub.docker.com/r/bitnami/postgresql/tags/
@@ -189,8 +189,8 @@ extraEnv: []
 ## Alternatively, you can put your postgresql.conf under the files/ directory
 ## ref: https://www.postgresql.org/docs/current/static/runtime-config.html
 ##
-# postgresqlConfiguration:
-
+postgresqlConfiguration:
+  {"max_locks_per_transaction":  "512"}
 ## PostgreSQL extended configuration
 ## As above, but _appended_ to the main configuration
 ## Alternatively, you can put your *.conf under the files/conf.d/ directory
@@ -404,7 +404,7 @@ persistence:
   ##
   subPath: ''
 
-  storageClass: "rook-ceph-block"
+  storageClass: "gp3"
   accessModes:
     - ReadWriteOnce
   size: 50Gi
