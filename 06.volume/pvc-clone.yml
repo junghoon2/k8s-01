@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-pvc
+  namespace: monitoring
+spec:
+  storageClassName: gp2
+  dataSource:
+    name: prometheus-prom-operator-prometheus-o-prometheus-db-prometheus-prom-operator-prometheus-o-prometheus-0
+    kind: PersistentVolumeClaim
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
