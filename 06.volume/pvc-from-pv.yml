@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-prometheus-kube-prometheus-prometheus-db-prometheus-prometheus-kube-prometheus-prometheus-0
+  namespace: monitoring
+spec:
+  storageClassName: gp3 # Empty string must be explicitly set otherwise default StorageClass will be set
+  volumeName: prometheus-pv
