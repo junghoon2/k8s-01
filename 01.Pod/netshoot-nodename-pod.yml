@@ -4,7 +4,7 @@ kind: Pod
 metadata:
   name: pod1
 spec:
-  nodeName: ubun20-81 # 노드의 호스트이름을 직접 지정했습니다
+  # nodeName: ubun20-81 # 노드의 호스트이름을 직접 지정했습니다
   containers:
     - name: pod1
       image: nicolaka/netshoot # 이미지는 네트워크 장애 처리에 유용한 이미지를 사용합니다
