@@ -9,13 +9,15 @@ spec:
     resources:
       limits:
         cpu: "1"
-        memory: 1Gb
+        memory: 1Gi
       requests:
         cpu: "0.5"
-        memory: 100mb
+        memory: 1Gi
     args:
     - -cpus
     - "2"
+  nodeSelector:
+    nodetype: asterisk-in
 
         # resources:
         #   limits:
