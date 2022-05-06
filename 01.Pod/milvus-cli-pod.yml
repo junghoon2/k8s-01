@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # annotations:
+  #   diamanti.com/endpoint0: '{"network":"blue","perfTier":"high"}'
+  name: milvus-cli
+  labels:
+    run: milvus-cli
+spec:
+  containers:
+  - name: milvus-cli
+    image: zilliz/milvus_cli:latest
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "sleep inf"

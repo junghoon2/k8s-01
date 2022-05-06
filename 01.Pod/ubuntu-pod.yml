@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # annotations:
+  #   diamanti.com/endpoint0: '{"network":"blue","perfTier":"high"}'
+  name: ubuntu
+  labels:
+    run: ubuntu
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "sleep inf"
