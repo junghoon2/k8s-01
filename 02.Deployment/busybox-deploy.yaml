@@ -6,7 +6,7 @@ metadata:
   labels:
     app: busybox
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: busybox  # POD label과 일치
@@ -34,4 +34,13 @@ spec:
           requests:
             cpu: 100m
             memory: 128Mi
-
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - busybox
+            topologyKey: "kubernetes.io/hostname"
