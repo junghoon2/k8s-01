@@ -6,7 +6,7 @@ metadata:
   labels:
     app: busybox
 spec:
-  replicas: 6
+  replicas: 2
   selector:
     matchLabels:
       app: busybox  # POD label과 일치
@@ -29,10 +29,10 @@ spec:
         - "sleep inf"
         resources:
           limits:
-            cpu: 150m
+            cpu: 1500m
             memory: 512Mi
           requests:
-            cpu: 100m
+            cpu: 1500m
             memory: 128Mi
       affinity:
         podAntiAffinity:
