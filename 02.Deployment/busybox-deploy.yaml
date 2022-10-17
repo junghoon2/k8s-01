@@ -23,24 +23,26 @@ spec:
       - name: busybox
         image: busybox
         # image: harbor.spk.io/spk/busybox
-        command:
-        - "/bin/sh"
-        - "-c"
-        - "sleep inf"
-        resources:
-          limits:
-            cpu: 1500m
-            memory: 512Mi
-          requests:
-            cpu: 1500m
-            memory: 128Mi
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - busybox
-            topologyKey: "kubernetes.io/hostname"
+        # command:
+        # - "/bin/sh"
+        # - "-c"
+        # - "sleep inf"
+        command: ["bash"]
+        args: ["-c", "sleep inf"]        
+        # resources:
+        #   limits:
+        #     cpu: 1500m
+        #     memory: 512Mi
+        #   requests:
+        #     cpu: 1500m
+        #     memory: 128Mi
+      # affinity:
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #     - labelSelector:
+      #         matchExpressions:
+      #         - key: app
+      #           operator: In
+      #           values:
+      #           - busybox
+      #       topologyKey: "kubernetes.io/hostname"
