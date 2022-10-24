@@ -3,13 +3,13 @@ kind: Pod
 metadata:
   # annotations:
   #   diamanti.com/endpoint0: '{"network":"blue","perfTier":"high"}'
-  name: ubuntu
+  name: ubuntu-curl-test
   labels:
     run: ubuntu
 spec:
   containers:
   - name: ubuntu
-    image: ubuntu
+    image: 886632063643.dkr.ecr.ap-northeast-2.amazonaws.com/ubuntu-curl:1.0-amd64
     command:
       - "/bin/sh"
       - "-c"
