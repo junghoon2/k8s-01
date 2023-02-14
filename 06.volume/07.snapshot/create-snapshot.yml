@@ -1,21 +1,10 @@
-# apiVersion: snapshot.storage.k8s.io/v1alpha1
-# kind: VolumeSnapshot
-# metadata:
-#  name: csi-pvc-filesystem-snapshot
-# spec:
-#  snapshotClassName: csi-snapshotclass
-#  source:
-#    name: default-pvc
-#    kind: PersistentVolumeClaim
-
-# apiVersion: snapshot.storage.k8s.io/v1beta1
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
 metadata:
   # name: redis-snapshot-100g
-  name: redis-snapshot-150g
+  name: grafana-snapshot
 spec:
-  volumeSnapshotClassName: csi-rbdplugin-snapclass  # snapshot class 지정
+  volumeSnapshotClassName: ebs-csi-aws  # snapshot class 지정
   # volumeSnapshotClassName: default-snapclass  # snapshot class 지정
   source:
-    persistentVolumeClaimName: redis-pvc  # 백업 대상 PVC 지정
+    persistentVolumeClaimName: grafana  # 백업 대상 PVC 지정
