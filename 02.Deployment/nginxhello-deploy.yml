@@ -18,7 +18,3 @@ spec:
       containers:
       - name: nginx
         image: nginxdemos/hello
-        # image: nginx:1.19.2
-        # volumeMounts:
-        # - mountPath: /exports
-        #   name: nfs-export
